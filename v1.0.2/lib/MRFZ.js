@@ -1,4 +1,4 @@
-const MRFZ = {
+var MRFZ = {
 	ReconitionInterface: function (capture, image, posibility) {
 		let PointPosition = findImage(capture, image, {
 			threshold: posibility,
@@ -19,7 +19,7 @@ const MRFZ = {
 		];
 	},
 	GetButton: function (capture, ButtonName, SetThre) {
-		let image = images.read("./res/" + ButtonName + ".png");
+		let image = images.read("../res/" + ButtonName + ".png");
 		return SetThre ? this.ReconitionInterface(capture, image, SetThre) : this.ReconitionInterface(capture, image, 0.7);
 	},
 	ClickButton: function (PointPosition) {

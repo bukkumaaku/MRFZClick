@@ -1,14 +1,10 @@
 "ui";
 
 importClass(android.view.View);
-var _sleep = sleep;
-sleep = (e) => {
-	_sleep(e + Math.pow(10, e.toString().length - 1));
-};
 
 if (!files.exists("./setting.js")) {
 	files.create("./setting.js");
-	toast("文件丢失，已创建");
+	toast("配置文件丢失，已创建");
 }
 
 let setting = files.read("./setting.js", (encoding = "utf-8"));
@@ -149,11 +145,18 @@ ui.emitter.on("resume", function () {
 	ui.autoservice.checked = auto.service != null;
 });
 
+var FloatyJs;
+
 ui.start.on("click", () => {
 	if (!auto.service) {
 		toast("请打开无障碍服务");
+	} else if (ui.start.getText() == "开始") {
+		files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
+		FloatyJs = engines.execScriptFile("./lib/floaty.js");
+		ui.start.setText("停止");
 	} else {
-		threads.start(startClick);
+		FloatyJs.forceStop();
+		ui.start.setText("开始");
 	}
 });
 
@@ -184,3 +187,5 @@ function DownloadNewVersion() {
 		}
 	});
 }
+
+function NewFloaty() {}

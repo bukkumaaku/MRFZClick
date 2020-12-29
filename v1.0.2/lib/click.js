@@ -1,4 +1,10 @@
-const MRFZ = require("MRFZ.js");
+var setting = JSON.parse(files.read("../setting.js", (encoding = "utf-8")));
+var MRFZ = require("MRFZ.js");
+const _sleep = sleep;
+
+sleep = (e) => {
+	_sleep(e + Math.pow(10, e.toString().length - 1));
+};
 
 if (!setting.recycles) {
 	setting.recycles = 1;
