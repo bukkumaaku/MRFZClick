@@ -1,9 +1,9 @@
 {
   "assets": [],
   "build": {
-    "build_id": "E5EBFCE1-16",
-    "build_number": 16,
-    "build_time": 1609132906800,
+    "build_id": "FBCCD3E8-19",
+    "build_number": 19,
+    "build_time": 1609299053379,
     "release": false
   },
   "encryptLevel": 0,
@@ -24,6 +24,6 @@
   },
   "packageName": "com.mrfz.click",
   "scripts": {},
-  "versionCode": 1,
-  "versionName": "1.0.0"
+  "versionCode": 3,
+  "versionName": "1.0.2"
 }
