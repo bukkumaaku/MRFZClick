@@ -1,4 +1,4 @@
 {
-	"VersionCode": 2,
-	"Description": "*bug修复\n*支持剿灭\n*文本修复"
+	"VersionCode": 3,
+	"Description": "*修复bug\n*更换悬浮窗\n*通过悬浮窗控制脚本开始停止"
 }
