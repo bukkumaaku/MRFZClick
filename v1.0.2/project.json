@@ -1,0 +1,29 @@
+{
+  "assets": [],
+  "build": {
+    "build_id": "FBCCD3E8-19",
+    "build_number": 19,
+    "build_time": 1609299053379,
+    "release": false
+  },
+  "encryptLevel": 0,
+  "useFeatures": [],
+  "icon": "res/icon.png",
+  "launchConfig": {
+    "displaySplash": true,
+    "hideLogs": true,
+    "splashIcon": "res/splashIcon.png",
+    "splashText": "Powered by 栞栞",
+    "stableMode": true
+  },
+  "main": "main.js",
+  "name": "明日方舟点击",
+  "optimization": {
+    "removeOpenCv": false,
+    "unusedResources": true
+  },
+  "packageName": "com.mrfz.click",
+  "scripts": {},
+  "versionCode": 3,
+  "versionName": "1.0.2"
+}
