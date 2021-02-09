@@ -3,5 +3,5 @@
 	"Description": "*修复一大堆bug\n*请务必更新",
 	"EvalCodeVersion":2,
 	"EvalCodeDescription":"我也不知道更新了啥，更新就对了！",
-	"EvalCode":"this.UpdateResource()"
+	"EvalCode":"UPDATE.UpdateResource()"
 }
