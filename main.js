@@ -1,4 +1,9 @@
 "ui";
+importClass(android.widget.SpinnerAdapter);
+importClass(android.view.ViewGroup);
+importClass(android.view.View);
+importClass(android.widget.TextView);
+var UPDATE = require("./lib/UPDATE");
 
 if (!files.exists("./setting.js")) {
 	files.create("./setting.js");
@@ -23,227 +28,216 @@ var MaterialList = JSON.parse(
 var MaterialMenu = MaterialList.join("|");
 var AddItem,
 	AddItemList = [],
-	AddItemNum = 1,
-	ListText;
-
+	AddItemNum = 1;
+var ImgPath = "file://./res/material/";
 ui.layout(
-	<frame>
-		<drawer id="drawer">
-			<vertical>
-				<appbar>
-					<toolbar
-						id="toolbar"
-						layout_gravity="left"
-						textSize="20sp"
-						layout_weight="1"
-						title="明日方舟连点器"
-					/>
-					<tabs id="tabs" />
-				</appbar>
-				<frame>
-					<viewpager id="viewpager">
-						<frame>
-							<vertical
-								marginLeft="20"
-								marginRight="20"
-								marginTop="20"
-								id="start"
-							>
+	<drawer id="drawer">
+		<vertical>
+			<appbar>
+				<toolbar
+					id="toolbar"
+					layout_gravity="left"
+					textSize="20sp"
+					layout_weight="1"
+					title="明日方舟连点器"
+				/>
+				<tabs id="tabs" />
+			</appbar>
+			<frame>
+				<viewpager id="viewpager">
+					<frame>
+						<vertical
+							marginLeft="20"
+							marginRight="20"
+							marginTop="20"
+							id="start"
+						>
+							<Switch
+								id="autoservice"
+								text="*打开无障碍服务"
+								checked="{{auto.service != null}}"
+								textColor="red"
+								textSize="20sp"
+							/>
+							<Switch
+								id="openFloaty"
+								text="*打开悬浮窗权限"
+								checked="{{floaty.checkPermission()}}"
+								textColor="red"
+								textSize="20sp"
+							/>
+							<vertical id="showList">
 								<Switch
-									id="autoservice"
-									text="*打开无障碍服务"
-									checked="{{auto.service != null}}"
-									textColor="red"
+									id="isRecycle"
+									checked="{{setting.isRecycle}}"
+									text="限制运行循环"
 									textSize="20sp"
 								/>
-								<Switch
-									id="openFloaty"
-									text="*打开悬浮窗权限"
-									checked="{{floaty.checkPermission()}}"
-									textColor="red"
-									textSize="20sp"
-								/>
-								<vertical id="showList">
-									<Switch
-										id="isRecycle"
-										checked="{{setting.isRecycle}}"
-										text="限制运行循环"
-										textSize="20sp"
-									/>
-									<horizontal id="recycleTimes">
-										<input
-											id="recycles"
-											w="100"
-											inputType="number"
-											text="{{setting.recycles}}"
-										/>
-										<text
-											text="循环多少次"
-											textSize="20sp"
-											textColor="black"
-										/>
-									</horizontal>
-									<Switch
-										id="UseOriginiums"
-										checked="{{setting.UseOriginiums}}"
-										text="是否使用源石补充理智"
-										textSize="20sp"
-									/>
-									<horizontal id="UseOriginiumsNumberCount">
-										<input
-											id="UseOriginiumsNumber"
-											w="100"
-											inputType="number"
-											text="{{setting.UseOriginiumsNumber}}"
-										/>
-										<text
-											text="使用多少颗源石"
-											textSize="20sp"
-											textColor="black"
-										/>
-									</horizontal>
-									<Switch
-										id="UseSanMedician"
-										checked="{{setting.UseSanMedician}}"
-										text="是否使用理智药剂"
-										textSize="20sp"
-									/>
-									<Switch
-										id="TwoSpeed"
-										checked="{{setting.TwoSpeed}}"
-										text="识别速度x2（耗电增加）"
-										textSize="20sp"
+								<horizontal id="recycleTimes">
+									<input
+										id="recycles"
+										w="100"
+										inputType="number"
+										text="{{setting.recycles}}"
 									/>
 									<text
-										text="*停止脚本按音量上键"
-										textColor="red"
+										text="循环多少次"
 										textSize="20sp"
+										textColor="black"
 									/>
-								</vertical>
-							</vertical>
-						</frame>
-						<frame>
-							<vertical
-								marginLeft="20"
-								marginRight="20"
-								marginTop="20"
-								id="material"
-							>
+								</horizontal>
 								<Switch
-									id="limitMaterial"
-									text="是否指定所需材料"
-									checked="{{setting.CountMaterial}}"
+									id="UseOriginiums"
+									checked="{{setting.UseOriginiums}}"
+									text="是否使用源石补充理智"
 									textSize="20sp"
 								/>
-								<vertical id="materialList">
-									<horizontal>
-										<text
-											text="固源岩"
-											id="selectMaterial"
-										/>
+								<horizontal id="UseOriginiumsNumberCount">
+									<input
+										id="UseOriginiumsNumber"
+										w="100"
+										inputType="number"
+										text="{{setting.UseOriginiumsNumber}}"
+									/>
+									<text
+										text="使用多少颗源石"
+										textSize="20sp"
+										textColor="black"
+									/>
+								</horizontal>
+								<Switch
+									id="UseSanMedician"
+									checked="{{setting.UseSanMedician}}"
+									text="是否使用理智药剂"
+									textSize="20sp"
+								/>
+								<Switch
+									id="TwoSpeed"
+									checked="{{setting.TwoSpeed}}"
+									text="识别速度x2（耗电增加）"
+									textSize="20sp"
+								/>
+								<text
+									text="*停止脚本按音量上键"
+									textColor="red"
+									textSize="20sp"
+								/>
+							</vertical>
+						</vertical>
+					</frame>
+					<frame>
+						<vertical
+							marginLeft="20"
+							marginRight="20"
+							marginTop="20"
+							id="material"
+						>
+							<Switch
+								id="limitMaterial"
+								text="是否指定所需材料"
+								checked="{{setting.CountMaterial}}"
+								textSize="20sp"
+								marginBottom="15sp"
+							/>
+							<vertical id="materialList">
+								<horizontal>
+									<spinner
+										id="chooseMaterial"
+										w="300"
+										h="59"
+										spinnerMode="dialog"
+									/>
+									<card
+										w="40"
+										h="40"
+										cardBackgroundColor="#009788"
+										layout_gravity="right|center"
+										cardCornerRadius="20"
+									>
 										<text
 											text="+"
-											w="*"
+											w="40"
+											height="40"
 											textSize="20sp"
-											textColor="#000000"
+											textColor="#ffffff"
 											gravity="center"
 											id="addMaterial"
-											bg="#f1f1f1"
 											foreground="?selectableItemBackground"
 										/>
-									</horizontal>
-									<ScrollView>
-										<vertical id="addMaterialList"></vertical>
-									</ScrollView>
-								</vertical>
+									</card>
+								</horizontal>
+								<ScrollView marginTop="20">
+									<vertical id="addMaterialList"></vertical>
+								</ScrollView>
 							</vertical>
-						</frame>
-						<frame>
-							<vertical
-								marginLeft="20"
-								marginRight="20"
-								marginTop="20"
-								id="about"
-							>
-								<button
-									w="*"
-									h="auto"
-									id="CheckUpdate"
-									textSize="18sp"
-									text="检查更新"
-									style="Widget.AppCompat.Button.Borderless.Colored"
-									textColor="black"
-									gravity="left"
-									gravity="center_vertical"
-								/>
-								<button
-									w="*"
-									h="auto"
-									id="SubmitIssues"
-									textSize="18sp"
-									text="反馈问题"
-									style="Widget.AppCompat.Button.Borderless.Colored"
-									textColor="black"
-									gravity="left"
-									gravity="center_vertical"
-								/>
-								<button
-									w="*"
-									h="auto"
-									textSize="18sp"
-									text="关于"
-									style="Widget.AppCompat.Button.Borderless.Colored"
-									textColor="black"
-									gravity="left"
-									gravity="center_vertical"
-									id="About"
-								/>
-							</vertical>
-						</frame>
-					</viewpager>
-					<card
-						w="60"
-						h="60"
-						cardBackgroundColor="#009788"
-						layout_gravity="bottom|right"
-						marginRight="20"
-						marginBottom="50"
-						cardCornerRadius="30"
-					>
-						<text
-							w="*"
-							h="*"
-							id="startC"
-							textColor="#ffffff"
-							gravity="center"
-							text="开始"
-							textSize="15sp"
-							foreground="?selectableItemBackground"
-						/>
-					</card>
-				</frame>
-			</vertical>
-		</drawer>
-		<frame
-			w="*"
-			h="*"
-			bg="#60000000"
-			id="spinnerMask"
-			visibility="gone"
-		></frame>
-		<frame
-			visibility="gone"
-			layout_gravity="center"
-			w="900px"
-			h="1700px"
-			bg="#eeeeeeee"
-			id="addListPinner"
-		>
-			<ScrollView w="*" h="*">
-				<vertical id="addList" w="*" paddingTop="15"></vertical>
-			</ScrollView>
-		</frame>
-	</frame>
+						</vertical>
+					</frame>
+					<frame>
+						<vertical
+							marginLeft="20"
+							marginRight="20"
+							marginTop="20"
+							id="about"
+						>
+							<button
+								w="*"
+								h="auto"
+								id="CheckUpdate"
+								textSize="18sp"
+								text="检查更新"
+								style="Widget.AppCompat.Button.Borderless.Colored"
+								textColor="black"
+								gravity="left"
+								gravity="center_vertical"
+							/>
+							<button
+								w="*"
+								h="auto"
+								id="SubmitIssues"
+								textSize="18sp"
+								text="反馈问题"
+								style="Widget.AppCompat.Button.Borderless.Colored"
+								textColor="black"
+								gravity="left"
+								gravity="center_vertical"
+							/>
+							<button
+								w="*"
+								h="auto"
+								textSize="18sp"
+								text="关于"
+								style="Widget.AppCompat.Button.Borderless.Colored"
+								textColor="black"
+								gravity="left"
+								gravity="center_vertical"
+								id="About"
+							/>
+						</vertical>
+					</frame>
+				</viewpager>
+				<card
+					w="60"
+					h="60"
+					cardBackgroundColor="#009788"
+					layout_gravity="bottom|right"
+					marginRight="20"
+					marginBottom="50"
+					cardCornerRadius="30"
+				>
+					<text
+						w="*"
+						h="*"
+						id="startC"
+						textColor="#ffffff"
+						gravity="center"
+						text="开始"
+						textSize="15sp"
+						foreground="?selectableItemBackground"
+					/>
+				</card>
+			</frame>
+		</vertical>
+	</drawer>
 );
 /*****************************界面初始化开始************************************/
 
@@ -252,9 +246,7 @@ ui.viewpager.setTitles(["设置", "材料", "关于"]);
 //让滑动页面和标签栏联动
 ui.tabs.setupWithViewPager(ui.viewpager);
 
-//DownloadNewVersion();
-
-ListMaterial();
+UPDATE.main();
 
 let storage = storages.create("MRFZClickMaterialList");
 let ItemList = storage.get("list");
@@ -408,21 +400,21 @@ ui.limitMaterial.on("check", (checked) => {
 	files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
 	AddMaterialInitial();
 });
+setTimeout(function () {
+	setSpinnerAdapter(ui.chooseMaterial, MaterialList);
+}, 50);
 
 ui.addMaterial.click(function () {
-	AddMaterial(ui.selectMaterial.getText());
+	AddMaterial(ui.chooseMaterial.getSelectedItem());
 });
-ui.selectMaterial.click(function () {
-	ui.addListPinner.attr("visibility", "visible");
-	ui.spinnerMask.attr("visibility", "visible");
-});
+
 /*****************************第二标签页内容结束************************************/
 
 /*****************************第三标签页内容开始************************************/
 
 //点击更新按钮
 ui.CheckUpdate.click(function () {
-	DownloadNewVersion();
+	UPDATE.main();
 });
 
 //点击提交意见按钮
@@ -437,45 +429,6 @@ ui.About.click(function () {
 
 /*****************************第三标签页内容结束************************************/
 /*****************************函数存放区************************************/
-
-function DownloadNewVersion() {
-	toast("正在查询是否有更新");
-	http.get(
-		"https://raw.githubusercontent.com/bukkumaaku/MRFZClick/main/VersionCode.json",
-		{},
-		function (GetVersionCodeHttp) {
-			try {
-				if (GetVersionCodeHttp.statusCode == 200) {
-					let VersionCodeMessage = JSON.parse(
-						GetVersionCodeHttp.body.string()
-					);
-					let NowVersionCode = app.versionCode;
-					if (
-						Number(VersionCodeMessage.VersionCode) > NowVersionCode
-					) {
-						let IsDownload = confirm(
-							"发现更新",
-							"更新日志：\n" +
-								VersionCodeMessage.Description +
-								"\n需要打开浏览器下载吗"
-						);
-						if (IsDownload) {
-							app.openUrl(
-								"https://github.com/bukkumaaku/MRFZClick/releases"
-							);
-						}
-					} else {
-						toast("已是最新版");
-					}
-				} else {
-					toast("查询失败");
-				}
-			} catch (e) {
-				toast("获取更新失败，请检查网络");
-			}
-		}
-	);
-}
 
 function AddMaterialInitial() {
 	if (ui.limitMaterial.checked) {
@@ -493,7 +446,7 @@ function CountMaterial() {
 		done: [],
 	};
 	for (let i = 0; i < ChildCount; i++) {
-		let name = ui.addMaterialList.getChildAt(i).getChildAt(1).getText();
+		let name = ui.addMaterialList.getChildAt(i).getChildAt(2).getText();
 		let number = Number(
 			ui.addMaterialList.getChildAt(i).getChildAt(0).getText()
 		);
@@ -532,36 +485,47 @@ function AddMaterial(item, num) {
 	}
 	AddItemList.push(AddItem);
 	let AddText = ui.inflate(
-		<horizontal>
-			<input text="{{AddItemNum}}" inputType="number" w="100" />
+		<horizontal w="*" h="auto" layout_weight="1">
+			<input text="{{AddItemNum}}" inputType="number" w="80" />
+			<card
+				cardCornerRadius="20"
+				layout_gravity="center"
+				gravity="center"
+			>
+				<img id="img" src="{{ImgPath}}{{AddItem}}.png" h="40" w="40" />
+			</card>
 			<text
 				text="{{AddItem}}"
+				marginLeft="10"
 				textSize="18sp"
 				textColor="black"
-				gravity="center"
-				w="200sp"
+				w="auto"
+				layout_weight="1"
 			/>
-			<text
-				text="-"
-				textSize="18sp"
-				textColor="black"
-				gravity="center"
-				w="*"
-				foreground="?selectableItemBackground"
-			/>
+
+			<card w="40sp" h="40sp" marginRight="13sp" cardCornerRadius="20sp">
+				<text
+					text="×"
+					textSize="20sp"
+					textColor="#009788"
+					layout_gravity="center"
+					gravity="center"
+					foreground="?selectableItemBackground"
+				/>
+			</card>
 		</horizontal>,
 		ui.addMaterialList
 	);
 	ui.addMaterialList.addView(AddText);
 	var ChildCount = ui.addMaterialList.getChildCount();
 	for (let i = 0; i < ChildCount; i++) {
-		ui.addMaterialList.getChildAt(i).getChildAt(2).removeAllListeners();
+		ui.addMaterialList.getChildAt(i).getChildAt(3).removeAllListeners();
 		ui.addMaterialList
 			.getChildAt(i)
-			.getChildAt(2)
+			.getChildAt(3)
 			.click(function (e) {
 				AddItemList.splice(
-					AddItemList.indexOf(e.getParent().getChildAt(1).getText()),
+					AddItemList.indexOf(e.getParent().getChildAt(2).getText()),
 					1
 				);
 				ui.addMaterialList.removeView(e.getParent());
@@ -570,36 +534,67 @@ function AddMaterial(item, num) {
 	}
 	CountMaterial();
 }
-function ListMaterial() {
-	let list = MaterialList;
-	for (let i = 0; i < list.length; i++) {
-		ListText = list[i];
-		let AddText = ui.inflate(
-			<horizontal
-				h="40"
-				paddingLeft="20"
-				foreground="?selectableItemBackground"
-			>
-				<img src="file://./明日方舟连点器/res/material/{{ListText}}.png" />
+
+function setSpinnerAdapter(spinner, dataList) {
+	let boxXml = (
+		<card w="*" h="61" bg="#009788">
+			<horizontal w="*" h="60" bg="#ffffff">
+				<card
+					marginLeft="20"
+					cardCornerRadius="20"
+					marginTop="10"
+					marginRight="20"
+				>
+					<img id="img" h="40" w="40" />
+				</card>
 				<text
-					text="{{ListText}}"
-					textColor="#333333"
-					textSize="22sp"
+					id="name"
+					text=""
 					gravity="left|center"
+					textSize="15sp"
+					textColor="black"
+					w="*"
+					h="60"
 				/>
-			</horizontal>,
-			ui.addList
-		);
-		ui.addList.addView(AddText);
-		var ChildCount = ui.addList.getChildCount();
-		for (let j = 0; j < ChildCount; j++) {
-			ui.addList.getChildAt(j).removeAllListeners();
-			ui.addList.getChildAt(j).click(function (e) {
-				let text = e.getChildAt(1).getText();
-				ui.addListPinner.attr("visibility", "gone");
-				ui.spinnerMask.attr("visibility", "gone");
-				ui.selectMaterial.setText(text);
-			});
-		}
+			</horizontal>
+		</card>
+	);
+	function createAdapter(dataList) {
+		let adapter = JavaAdapter(android.widget.SpinnerAdapter, {
+			getCount: function () {
+				return dataList.length;
+			},
+			getItem: function (position) {
+				return dataList[position];
+			},
+			getItemId: function (position) {
+				return position;
+			},
+			getViewTypeCount: function (position) {
+				return 1;
+			},
+			getView: function (position, convertView, parent) {
+				if (!convertView) {
+					convertView = ui.inflate(boxXml, ui.drawer, false);
+				}
+				let item = dataList[position];
+				convertView.name.setText(item);
+				convertView.img.attr("src", ImgPath + item + ".png");
+				return convertView;
+			},
+			getDropDownView: function (position, convertView, parent) {
+				if (!convertView) {
+					convertView = ui.inflate(boxXml, ui.drawer, false);
+				}
+				let item = dataList[position];
+				if (convertView.name.getText().toString() != item) {
+					convertView.name.setText(item);
+					convertView.img.attr("src", ImgPath + item + ".png");
+				}
+				return convertView;
+			},
+		});
+		return adapter;
 	}
+	spinner.setAdapter(createAdapter(dataList));
 }
