@@ -1,7 +1,7 @@
 {
-	"VersionCode": 4,
-	"Description": "*修复一大堆bug\n*请务必更新",
+	"VersionCode": 5,
+	"Description": "*增加了材料识别功能\n*ui美化\n*修复大量bug",
 	"EvalCodeVersion":1,
-	"EvalCodeDescription":"我也不知道更新了啥，更新就对了！",
+	"EvalCodeDescription":"更新一些资源文件",
 	"EvalCode":"UPDATE.UpdateResource()"
 }

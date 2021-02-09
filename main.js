@@ -250,13 +250,15 @@ UPDATE.main();
 
 let storage = storages.create("MRFZClickMaterialList");
 let ItemList = storage.get("list");
-if (typeof ItemList == "string") {
-	ItemList = JSON.parse(ItemList);
-}
-for (let i = 0; i < ItemList.name.length; i++) {
-	let delta = ItemList.number[i] - ItemList.done[i];
-	if (delta > 0) {
-		AddMaterial(ItemList.name[i], delta);
+if (ItemList) {
+	if (typeof ItemList == "string") {
+		ItemList = JSON.parse(ItemList);
+	}
+	for (let i = 0; i < ItemList.name.length; i++) {
+		let delta = ItemList.number[i] - ItemList.done[i];
+		if (delta > 0) {
+			AddMaterial(ItemList.name[i], delta);
+		}
 	}
 }
 
