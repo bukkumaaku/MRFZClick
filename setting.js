@@ -1,0 +1,1 @@
+{"recycles":5,"UseOriginiumsNumber":2,"openFloaty":true,"UseOriginiums":false,"UseSanMedician":true,"isRecycle":false,"CountMaterial":true,"TwoSpeed":true}
