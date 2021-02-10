@@ -2,6 +2,6 @@
 	"VersionCode": 5,
 	"Description": "*增加了材料识别功能\n*ui美化\n*修复大量bug",
 	"EvalCodeVersion":1,
-	"EvalCodeDescription":"更新一些资源文件",
-	"EvalCode":"UPDATE.UpdateResource()"
+	"EvalCodeDescription":"更新识别材料时机错误",
+	"EvalCode":"threads.start(function () { let res = http.get( 'https://raw.githubusercontent.com/bukkumaaku/MRFZClick/main/lib/click.js'); files.writeBytes('./lib/click.js', res.body.toString()); alert('更新完成，将会自动重启应用');exit();});"
 }
