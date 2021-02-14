@@ -1,9 +1,9 @@
 {
   "assets": [],
   "build": {
-    "build_id": "A94C880E-35",
-    "build_number": 35,
-    "build_time": 1611311149068,
+    "build_id": "A05AA2A6-42",
+    "build_number": 42,
+    "build_time": 1612927926004,
     "release": false
   },
   "encryptLevel": 0,
@@ -24,6 +24,6 @@
   },
   "packageName": "com.mrfz.click",
   "scripts": {},
-  "versionCode": 3,
-  "versionName": "1.0.3"
+  "versionCode": 5,
+  "versionName": "1.0.5"
 }

@@ -1,1 +1,1 @@
-{"recycles":5,"UseOriginiumsNumber":2,"openFloaty":true,"UseOriginiums":false,"UseSanMedician":true,"isRecycle":false,"CountMaterial":false,"TwoSpeed":true,"EvalCodeVersion":1}
+{"recycles":5,"UseOriginiumsNumber":2,"openFloaty":true,"UseOriginiums":false,"UseSanMedician":true,"isRecycle":false,"CountMaterial":true,"TwoSpeed":true,"EvalCodeVersion":2,"SplitScreen":true}
