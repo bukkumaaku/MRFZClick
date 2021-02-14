@@ -1,6 +1,6 @@
 {
-	"VersionCode": 5,
-	"Description": "*增加了材料识别功能\n*ui美化\n*修复大量bug",
+	"VersionCode": 6,
+	"Description": "*增加分屏识别功能\n*修复bug",
 	"EvalCodeVersion":1,
 	"EvalCodeDescription":"更新识别材料时机错误",
 	"EvalCode":"alert(1)"
