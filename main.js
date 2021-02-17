@@ -3,7 +3,8 @@ importClass(android.widget.SpinnerAdapter);
 importClass(android.view.ViewGroup);
 importClass(android.view.View);
 importClass(android.widget.TextView);
-var UPDATE = require("./lib/UPDATE");
+
+var UPDATE = require("./lib/UPDATE.js");
 
 if (!files.exists("./lib/setting.json")) {
 	files.create("./lib/setting.json");
@@ -115,6 +116,12 @@ ui.layout(
 									id="TwoSpeed"
 									checked="{{setting.TwoSpeed}}"
 									text="识别速度x2（耗电增加）"
+									textSize="20sp"
+								/>
+								<Switch
+									id="SplitScreen"
+									checked="{{setting.SplitScreen}}"
+									text="识别屏幕方向(关闭为横屏)"
 									textSize="20sp"
 								/>
 								<text
@@ -311,6 +318,14 @@ ui.UseSanMedician.on("check", (checked) => {
 });
 ui.TwoSpeed.on("check", (checked) => {
 	setting.TwoSpeed = checked;
+	files.write(
+		"./lib/setting.json",
+		JSON.stringify(setting),
+		(encoding = "utf-8")
+	);
+});
+ui.SplitScreen.on("check", (checked) => {
+	setting.SplitScreen = checked;
 	files.write(
 		"./lib/setting.json",
 		JSON.stringify(setting),
