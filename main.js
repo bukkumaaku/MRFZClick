@@ -5,12 +5,12 @@ importClass(android.view.View);
 importClass(android.widget.TextView);
 var UPDATE = require("./lib/UPDATE");
 
-if (!files.exists("./setting.js")) {
-	files.create("./setting.js");
+if (!files.exists("./lib/setting.json")) {
+	files.create("./lib/setting.json");
 	toast("配置文件丢失，已创建");
 }
 
-let setting = files.read("./setting.js", (encoding = "utf-8"));
+let setting = files.read("./lib/setting.json", (encoding = "utf-8"));
 if (setting) {
 	setting = JSON.parse(setting);
 } else {
@@ -23,7 +23,7 @@ if (!setting.UseOriginiumsNumber) {
 	setting.UseOriginiumsNumber = 1;
 }
 var MaterialList = JSON.parse(
-	files.read("./materialName.json", (encoding = "utf-8"))
+	files.read("./lib/materialName.json", (encoding = "utf-8"))
 ).material;
 var MaterialMenu = MaterialList.join("|"),
 	AddItem,
@@ -293,23 +293,39 @@ ui.UseOriginiums.on("check", (checked) => {
 //点击是否循环
 ui.isRecycle.on("check", (checked) => {
 	setting.isRecycle = checked;
-	files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
+	files.write(
+		"./lib/setting.json",
+		JSON.stringify(setting),
+		(encoding = "utf-8")
+	);
 });
 
 //点击是否使用理智药剂
 ui.UseSanMedician.on("check", (checked) => {
 	setting.UseSanMedician = checked;
-	files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
+	files.write(
+		"./lib/setting.json",
+		JSON.stringify(setting),
+		(encoding = "utf-8")
+	);
 });
 ui.TwoSpeed.on("check", (checked) => {
 	setting.TwoSpeed = checked;
-	files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
+	files.write(
+		"./lib/setting.json",
+		JSON.stringify(setting),
+		(encoding = "utf-8")
+	);
 });
 
 //点击是否使用源石
 ui.UseOriginiums.on("check", (checked) => {
 	setting.UseOriginiums = checked;
-	files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
+	files.write(
+		"./lib/setting.json",
+		JSON.stringify(setting),
+		(encoding = "utf-8")
+	);
 });
 
 //点击是否打开悬浮窗
@@ -322,7 +338,7 @@ ui.recycles.addTextChangedListener({
 	afterTextChanged: (string) => {
 		setting.recycles = Number(string);
 		files.write(
-			"./setting.js",
+			"./lib/setting.json",
 			JSON.stringify(setting),
 			(encoding = "utf-8")
 		);
@@ -332,7 +348,7 @@ ui.UseOriginiumsNumber.addTextChangedListener({
 	afterTextChanged: (string) => {
 		setting.UseOriginiumsNumber = Number(string);
 		files.write(
-			"./setting.js",
+			"./lib/setting.json",
 			JSON.stringify(setting),
 			(encoding = "utf-8")
 		);
@@ -369,13 +385,13 @@ ui.startC.on("click", () => {
 			ui.UseOriginiumsNumber.setText(1);
 		}
 		files.write(
-			"./setting.js",
+			"./lib/setting.json",
 			JSON.stringify(setting),
 			(encoding = "utf-8")
 		);
 		CountMaterial();
 		files.write(
-			"./setting.js",
+			"./lib/setting.json",
 			JSON.stringify(setting),
 			(encoding = "utf-8")
 		);
@@ -398,7 +414,11 @@ AddMaterialInitial();
 //点击是否指定材料
 ui.limitMaterial.on("check", (checked) => {
 	setting.CountMaterial = checked;
-	files.write("./setting.js", JSON.stringify(setting), (encoding = "utf-8"));
+	files.write(
+		"./lib/setting.json",
+		JSON.stringify(setting),
+		(encoding = "utf-8")
+	);
 	AddMaterialInitial();
 });
 setTimeout(function () {
