@@ -1,7 +1,7 @@
 {
-	"VersionCode": 7,
-	"Description": "*修复了内存泄漏问题\n*动态适配识别图片大小\n*动态识别分屏\n*增加可选择材料\n*修复bug",
-	"EvalCodeVersion":1,
-	"EvalCodeDescription":"更新识别材料时机错误",
-	"EvalCode":"alert(1)"
+	"VersionCode": 14,
+	"Description": "*修复内存泄漏问题\n*完善相关功能\n*修复不识别结束界面\n*增加公招tag\n*增加材料\n下一版本将会进行代码重构，敬请期待（指摸鱼）",
+	"EvalCodeVersion": 1,
+	"EvalCodeDescription": "更新识别材料时机错误",
+	"EvalCode": "alert(1)"
 }
