@@ -1,29 +1,39 @@
 {
   "assets": [],
   "build": {
-    "build_id": "37CB9B06-44",
-    "build_number": 44,
-    "build_time": 1613268474199,
+    "build_id": "40C406BE-64",
+    "build_number": 64,
+    "build_time": 1650423697096,
     "release": false
   },
-  "encryptLevel": 0,
+  "encryptLevel": 3,
   "useFeatures": [],
-  "icon": "res/icon.png",
+  "icon": "icons/logo_icon.png",
   "launchConfig": {
     "displaySplash": true,
     "hideLogs": true,
-    "splashIcon": "res/splashIcon.png",
-    "splashText": "Powered by 栞栞",
+    "splashIcon": "icons/splash_icon.png",
+    "splashText": "随便看看（？",
     "stableMode": true
   },
   "main": "main.js",
-  "name": "明日方舟点击",
+  "name": "方舟小工具",
   "optimization": {
+    "removeAccessibilityService": false,
     "removeOpenCv": false,
     "unusedResources": false
   },
   "packageName": "com.mrfz.click",
+  "permissionConfig": {
+    "manifestPermissions": [
+      "android.permission.SYSTEM_ALERT_WINDOW",
+      "android.permission.FOREGROUND_SERVICE",
+      "android.permission.INTERNET",
+      "android.permission.WAKE_LOCK"
+    ],
+    "requestListOnStartup": []
+  },
   "scripts": {},
-  "versionCode": 6,
-  "versionName": "1.0.6"
+  "versionCode": 14,
+  "versionName": "1.1.5"
 }
